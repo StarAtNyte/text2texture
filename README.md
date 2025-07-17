@@ -1,6 +1,6 @@
-# AI Texture Generation System
+# Texture Generation
 
-A comprehensive Python-based texture generation system that creates high-quality, seamless textures using AI models. The system combines Stable Diffusion (SD3/SDXL) for texture generation with SwinIR for 4x super-resolution upscaling.
+A comprehensive Python-based texture generation system that creates high-quality, seamless textures using AI models. The system combines Stable Diffusion (SDXL) for texture generation with SwinIR for 4x super-resolution upscaling.
 
 ## Features
 
