@@ -1,5 +1,5 @@
 import torch
-from diffusers import StableDiffusion3Pipeline
+from diffusers import StableDiffusionXLPipeline, DPMSolverMultistepScheduler
 from PIL import Image
 import os
 import sys
@@ -207,6 +207,12 @@ TEXTURE_CATEGORIES = {
 # Configuration for reduced color/cfg combinations
 CFG_VALUES = [6.5, 7.5]  # Reduced from 5 to 2 values
 
+# SDXL + LoRA Configuration
+MODEL_ID = "stabilityai/stable-diffusion-xl-base-1.0"
+LORA_ID = "dog-god/texture-synthesis-sdxl-lora"
+LORA_WEIGHT_NAME = "texture-synthesis-topdown-base-condensed.safetensors"
+LORA_SCALE = 0.8
+
 def generate_texture_plan():
     """Generates a comprehensive texture plan from the expanded categories."""
     plan = []
@@ -240,21 +246,29 @@ class TextToTextureGenerator:
             print("CUDA not available, falling back to CPU. This will be very slow.")
             self.device = "cpu"
 
-    def initialize_sd_pipeline(self, model_id="stabilityai/stable-diffusion-3.5-medium"):
+    def initialize_sd_pipeline(self, model_id=MODEL_ID):
         if self.pipe is not None:
-            print("Stable Diffusion pipeline already initialized.")
+            print("Stable Diffusion XL pipeline already initialized.")
             return
-        print(f"Initializing Stable Diffusion 3 Pipeline: {model_id} on {self.device}...")
+        print(f"Initializing Stable Diffusion XL Pipeline: {model_id} on {self.device}...")
         try:
-            self.pipe = StableDiffusion3Pipeline.from_pretrained(
-                model_id, torch_dtype=torch.float16 if self.device == "cuda" else torch.float32
+            self.pipe = StableDiffusionXLPipeline.from_pretrained(
+                model_id, torch_dtype=torch.float16 if self.device == "cuda" else torch.float32,
+                variant="fp16" if self.device == "cuda" else None
             )
+            # Use DPM++ scheduler for better quality
+            self.pipe.scheduler = DPMSolverMultistepScheduler.from_config(self.pipe.scheduler.config)
+            
+            # Load texture synthesis LoRA
+            print(f"Loading texture synthesis LoRA: {LORA_ID}")
+            self.pipe.load_lora_weights(LORA_ID, weight_name=LORA_WEIGHT_NAME)
+            
             self.pipe.to(self.device)
             if hasattr(self.pipe, 'enable_attention_slicing'):
                 self.pipe.enable_attention_slicing()
-            print("Stable Diffusion Pipeline initialized successfully.")
+            print("Stable Diffusion XL Pipeline with LoRA initialized successfully.")
         except Exception as e:
-            print(f"Error initializing Stable Diffusion 3 pipeline: {e}")
+            print(f"Error initializing Stable Diffusion XL pipeline: {e}")
             raise
 
     def offload_sd_model(self):
@@ -289,16 +303,17 @@ class TextToTextureGenerator:
                     prompt=prompt, negative_prompt=negative_prompt,
                     width=width, height=height,
                     num_inference_steps=num_inference_steps, guidance_scale=guidance_scale,
-                    generator=generator
+                    generator=generator,
+                    cross_attention_kwargs={"scale": LORA_SCALE}
                 ).images[0]
 
-            output_filename = f"{base_name}_g{guidance_scale}_seed{seed}_sd_orig.png"
+            output_filename = f"{base_name}_g{guidance_scale}_seed{seed}_sdxl_orig.png"
             image_path = Path(output_dir) / output_filename
             
             counter = 0
             while image_path.exists():
                 counter += 1
-                output_filename = f"{base_name}_g{guidance_scale}_seed{seed}_sd_orig_{counter}.png"
+                output_filename = f"{base_name}_g{guidance_scale}_seed{seed}_sdxl_orig_{counter}.png"
                 image_path = Path(output_dir) / output_filename
             
             image.save(image_path)
@@ -316,7 +331,7 @@ def enhance_prompt_for_details(prompt: str) -> str:
         return f"{prompt}, {detail_keywords}"
     return prompt
 
-def file_already_exists(output_dir: str, filename_prefix: str, guidance_scale: float, seed: int, suffix: str = "_sd_orig.png") -> bool:
+def file_already_exists(output_dir: str, filename_prefix: str, guidance_scale: float, seed: int, suffix: str = "_sdxl_orig.png") -> bool:
     """Check if a file with the given parameters already exists."""
     base_name = _sanitize_filename(filename_prefix)
     expected_filename = f"{base_name}_g{guidance_scale}_seed{seed}{suffix}"
@@ -350,11 +365,11 @@ if __name__ == "__main__":
 
     sd_generator = TextToTextureGenerator()
     
-    print("\n--- PHASE 1: Stable Diffusion Texture Generation ---")
+    print("\n--- PHASE 1: Stable Diffusion XL + LoRA Texture Generation ---")
     sd_generator.initialize_sd_pipeline()
     
-    # Define the default negative prompt
-    default_negative_prompt = "blurry, low quality, unrealistic, noisy, text, watermark, signature, deformed, artifacts, jpeg artifacts, illustration, cartoon, painting, drawing, folds, wrinkles, creases, clothing, fabric draping, shadows, 3d depth, perspective, curved surface, bent material, folded, crumpled, seams, stitches, person, object, scene, frame, border, signature, logo, people, hands, ugly, distorted, out of frame, poorly drawn"
+    # Define the default negative prompt optimized for SDXL
+    default_negative_prompt = "blurry, lowres, watermark, text, signature, folds, creases, perspective, 3d, cartoon, illustration, deformed, artifacts, jpeg artifacts, painting, drawing, clothing, fabric draping, shadows, depth, curved surface, bent material, folded, crumpled, seams, stitches, person, object, scene, frame, border, logo, people, hands, ugly, distorted, out of frame, poorly drawn"
 
     all_sd_image_paths = []
     total_images_to_generate = len(generation_plan)
@@ -388,7 +403,7 @@ if __name__ == "__main__":
             skipped_generations += 1
             # Still add to paths list for super-resolution phase
             base_name = _sanitize_filename(filename_prefix)
-            expected_filename = f"{base_name}_g{guidance}_seed{seed}_sd_orig.png"
+            expected_filename = f"{base_name}_g{guidance}_seed{seed}_sdxl_orig.png"
             existing_path = Path(output_directory_sd) / expected_filename
             all_sd_image_paths.append(existing_path)
             continue
@@ -421,7 +436,7 @@ if __name__ == "__main__":
             if "out of memory" in str(e).lower():
                 print("  WARNING: CUDA OOM detected. Consider reducing batch size or image dimensions.")
 
-    print(f"\n--- PHASE 1 COMPLETE: Stable Diffusion textures generated. ---")
+    print(f"\n--- PHASE 1 COMPLETE: Stable Diffusion XL + LoRA textures generated. ---")
     print(f"Successfully generated: {len(all_sd_image_paths) - skipped_generations} images")
     print(f"Skipped existing: {skipped_generations} images")
     print(f"Failed generations: {failed_generations} images")
