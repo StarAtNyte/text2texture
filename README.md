@@ -11,17 +11,11 @@
 - **SDXL Integration**: Full Stable Diffusion XL with refiner for highest quality
 - **Seamless Generation**: Advanced circular padding and noise rolling for perfect seamless textures
 - **Professional Web Interface**: Modern Flask-based webapp for interactive texture generation
-- **Batch Processing**: Automated generation of texture datasets from material specifications
 - **Modal Labs Deployment**: Cloud-ready deployment with GPU acceleration
 
 ### Key Capabilities
 - **🔄 Guaranteed Seamless Output**: Every generated texture tiles perfectly with zero visible seams
-- **🎯 Advanced Seamless Algorithms**: Circular padding + noise rolling for 98%+ seamless success rate
 - **🔍 Multiple Tiling Verification**: 2x2, 3x3, and 4x4 automatic tiling tests to verify seamlessness
-- **👁️ Real-time Seamless Preview**: Instant visual feedback with side-by-side tiled comparisons
-- **⚙️ Professional Controls**: Fine-tune seamless generation parameters for optimal results
-- **📚 Material-Optimized Presets**: Specialized prompts for wood, fabric, stone, and metal seamless textures
-- **💾 Seamless-Ready Downloads**: Original texture + pre-tiled versions for immediate use
 
 ## 🚀 Quick Start
 
@@ -75,21 +69,6 @@ modal run modal_texture_generator_sdxl.py::tile
 ```
 **Result**: Hundreds of perfectly seamless textures organized by material type
 
-## 📁 Project Structure
-
-```
-text2texture/
-├── README.md                           # This documentation
-├── modal_texture_generator_sdxl.py     # Batch texture generation with seamless patching
-├── texture_webapp_full.py              # Professional web interface
-├── texture_webapp.py                   # Legacy web interface
-├── materials_part1.json                # Material specifications
-└── generated outputs/                  # Output directories (auto-created)
-    ├── /data/generated_textures_part1/
-    ├── /data/tiled_textures_part1/
-    └── /data/webapp-textures-full/
-```
-
 ## 🎯 System Components
 
 ### 1. SDXL Seamless Generation Engine
@@ -133,26 +112,10 @@ modal run modal_texture_generator_sdxl.py::complete_pipeline
 
 ### 2. Professional Seamless Texture Web Interface
 
-**File**: `texture_webapp_full.py`
-
-**🔄 Seamless-Focused Features**:
-- **Real-time Seamless Generation**: Input any prompt → get perfectly tileable texture
-- **Seamless Preview System**: Automatic side-by-side comparison (original vs tiled)
-- **Tiling Test Options**: Choose 2x2, 3x3, or 4x4 tiling to verify seamless quality
-- **Seamless Parameter Controls**: Fine-tune circular padding and noise rolling settings
-- **Material Presets for Seamlessness**: Pre-optimized prompts for seamless wood, fabric, stone, metal
-- **Seamless-Ready Downloads**: Get both original texture + pre-tiled proof of seamlessness
-
-**UI Sections**:
-- **Texture Prompt**: Text input with material presets
-- **Generation Settings**: Size, guidance scale, inference steps
-- **Advanced Options**: Seamless mode, refiner toggle, noise fraction
-- **Results Panel**: Real-time preview with download options
-
 **Deployment**:
 ```bash
 # Deploy to Modal Labs
-modal deploy texture_webapp_full.py
+modal deploy texture_webapp.py
 
 # The webapp will be available at the provided Modal URL
 ```
@@ -216,212 +179,4 @@ guidance_scales = [7.5, 8.5]
 num_inference_steps = 50
 high_noise_frac = 0.8  # Denoising split point
 ```
-
-<<<<<<< HEAD
-### Web Interface Features
-
-- **Responsive Design**: Works on desktop and mobile devices
-- **Real-time Updates**: Live generation progress and error handling
-- **Advanced Controls**: Fine-tuning options for professional users
-- **Visual Feedback**: Side-by-side original vs tiled comparison
-- **Download Management**: Organized file naming and metadata
-
-## 📊 Performance & Scaling
-
-### Hardware Requirements
-
-**Recommended Configuration**:
-- GPU: A100-40GB (Modal deployment)
-- CPU: 8+ cores
-- RAM: 32GB+
-- Storage: Fast SSD for model caching
-
-**Local Development**:
-- GPU: RTX 4090 24GB minimum
-- CPU: 4+ cores
-- RAM: 16GB+
-
-### Memory Optimization
-
-```python
-# Memory optimization features
-pipe.enable_attention_slicing()   # Reduce attention memory
-pipe.enable_vae_slicing()        # Reduce VAE memory
-torch.cuda.empty_cache()         # Clear GPU cache between generations
-```
-
-### Seamless Generation Performance
-
-- **Single Seamless Texture**: ~2-3 minutes (1024x1024 with refiner + seamless processing)
-- **Batch Seamless Processing**: ~5-10 perfectly tileable textures per hour
-- **Seamless Success Rate**: 98%+ seamless success rate (vs 60-70% for standard generation)
-- **Tiling Verification**: Automatic 2x2/3x3/4x4 tiling tests confirm seamlessness
-
-## 🎨 Material Categories & Examples
-
-### Built-in Categories
-
-**Rugs**:
-- Hand-knotted silk (fine-silk-knot-bumps, dense-knot-surface, lustrous-silk-weave)
-- Hand-knotted wool (wool-knot-bumps, thick-pile-surface, matte-wool-texture)
-
-**🔄 Seamless-Optimized Preset Templates**:
-- **Wood**: "seamless wood grain texture, dark oak, weathered surface, natural knots, high detail macro"
-- **Fabric**: "seamless fabric material texture, cotton weave, neutral beige, textile surface, detailed fiber"  
-- **Stone**: "seamless stone surface texture, granite, rough natural texture, mineral details, weathered rock"
-- **Metal**: "seamless metal surface texture, brushed steel, industrial finish, metallic reflection, oxidation details"
-
-**Note**: All presets include "seamless" keywords and are optimized for circular padding algorithms.
-
-### Custom Material Addition
-
-Add new materials to `materials_part1.json`:
-
-```json
-{
-  "new_category": {
-    "material_name": {
-      "prompt_template": "seamless tileable {material} texture, {style}, {color}, ultra-sharp 8k macro, orthogonal top-down, diffuse studio light, no perspective, no creases, vector-clean edges, 4x upscale ready, crisp details, plain solid material texture only, no decorative patterns, no motifs, no designs, uniform surface",
-      "styles": ["style1", "style2"],
-      "colors": ["color1", "color2"]
-    }
-  }
-}
-```
-
-**🔄 Seamless Prompt Requirements**:
-- Always include "seamless tileable" at the beginning
-- Add "orthogonal top-down" for flat texture mapping
-- Include "no perspective, no creases" to prevent edge discontinuities
-- Use "uniform surface" to ensure consistent patterns across edges
-
-## 🚀 Deployment Guide
-
-### Modal Labs Deployment
-
-1. **Setup Modal Account**:
-```bash
-pip install modal
-modal token set  # Follow authentication flow
-```
-
-2. **Create Secrets**:
-```bash
-modal secret create huggingface-secret HUGGINGFACE_TOKEN=your_token
-```
-
-3. **Deploy Applications**:
-```bash
-# Deploy web interface
-modal deploy texture_webapp_full.py
-
-# Deploy batch processor
-modal deploy modal_texture_generator_sdxl.py
-```
-
-### Local Development
-
-```bash
-# Install dependencies
-pip install flask torch diffusers transformers pillow
-
-# Run locally (requires GPU)
-python texture_webapp_full.py
-```
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-**CUDA Out of Memory**:
-```bash
-# Reduce batch size in batch processing
-# Lower inference steps (30-40 instead of 50)
-# Disable refiner for faster generation
-```
-
-**Seamless Quality Issues**:
-```bash
-# Check callback implementation timing (80% threshold)
-# Verify circular padding is applied correctly
-# Test with different noise rolling values
-```
-
-**Web Interface Issues**:
-```bash
-# Check Modal secrets are configured
-# Verify GPU allocation in Modal dashboard
-# Review Modal logs for detailed error messages
-```
-
-### Performance Optimization
-
-```python
-# Faster generation settings
-num_inference_steps = 30      # Reduce from 50
-guidance_scale = 7.0          # Single value instead of range
-use_refiner = False          # Skip refiner for speed
-```
-
-## 📈 Quality Metrics
-=======
-## Model Information
->>>>>>> fc269f8dac0395090cb0684d10bc08599eb49cb7
-
-### Seamless Success Rates
-- **Standard Generation**: 60-70% seamless
-- **With Circular Padding**: 85-90% seamless  
-- **With Noise Rolling**: 95%+ seamless
-- **Full Algorithm**: 98%+ seamless
-
-<<<<<<< HEAD
-### Image Quality Metrics
-- **Resolution**: 1024x1024 base, 4x4 tiling for testing
-- **Detail Preservation**: SDXL + refiner maintains fine details
-- **Color Accuracy**: Professional color space handling
-- **Format Support**: PNG output with lossless quality
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branches for new materials or enhancements
-3. Test with small batches before large-scale generation
-4. Update material specifications in JSON format
-5. Submit pull requests with clear descriptions
-
-### Development Guidelines
-
-- Follow existing code patterns for consistency
-- Test seamless generation before committing changes
-- Document new material categories thoroughly
-- Maintain backward compatibility with existing specifications
-
-## 📄 License
-
-This project is licensed under the MIT License. See LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- **Stability AI**: SDXL models and diffusion technology
-- **Modal Labs**: Cloud deployment platform
-- **HuggingFace**: Model hosting and diffusers library
-- **Flask**: Web framework for interface development
-- **Original Pattern-Diffusion**: Seamless generation algorithm inspiration
-
-## 📞 Support
-
-For technical issues:
-1. Check troubleshooting section above
-2. Review Modal dashboard logs
-3. Test with reduced parameters for memory issues
-4. Open GitHub issues with detailed error information
-
-For feature requests:
-1. Describe the use case clearly
-2. Provide example material specifications
-3. Consider backward compatibility requirements
-=======
-### Super-Resolution
-- **SwinIR-L**: 4x upscaling optimized for real-world images
-- **Model**: `003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth`
->>>>>>> fc269f8dac0395090cb0684d10bc08599eb49cb7
+'
