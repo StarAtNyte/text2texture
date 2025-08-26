@@ -1,0 +1,191 @@
+{
+  "clothing_textures": {
+    "cotton_knit": {
+      "prompt_template": "seamless tileable cotton knit texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["jersey-pattern", "ribbed-lines", "french-terry-dots", "waffle-grid"],
+      "colors": ["white", "heather-gray", "navy", "black", "cream", "dusty-rose"]
+    },
+    "denim_texture": {
+      "prompt_template": "seamless tileable denim weave texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["twill-diagonal", "crosshatch-weave", "stone-wash-pattern", "vintage-fade"],
+      "colors": ["classic-indigo", "black", "light-wash", "dark-rinse", "white", "gray-wash"]
+    },
+    "silk_texture": {
+      "prompt_template": "seamless tileable silk weave texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["satin-sheen", "crossweave", "crepe-texture", "taffeta-grid"],
+      "colors": ["ivory", "champagne", "deep-purple", "emerald", "navy", "blush-pink"]
+    },
+    "linen_texture": {
+      "prompt_template": "seamless tileable linen weave texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["loose-weave", "tight-weave", "slub-lines", "natural-variation"],
+      "colors": ["natural-flax", "white", "sage-green", "dusty-blue", "terracotta", "charcoal"]
+    }
+  },
+  "upholstery_textures": {
+    "velvet_texture": {
+      "prompt_template": "seamless tileable velvet texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["smooth-surface", "brushed-lines", "corduroy-ribs", "crushed-pattern"],
+      "colors": ["royal-blue", "emerald-green", "burgundy", "charcoal", "cream", "dusty-rose"]
+    },
+    "leather_texture": {
+      "prompt_template": "seamless tileable leather texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["smooth-grain", "pebbled-dots", "vintage-crackle", "soft-lines"],
+      "colors": ["cognac-brown", "black", "dark-brown", "tan", "burgundy", "gray"]
+    },
+    "boucle_texture": {
+      "prompt_template": "seamless tileable boucle texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["loop-dots", "nubby-texture", "chunky-weave", "fine-loops"],
+      "colors": ["cream", "oatmeal", "sage", "charcoal", "dusty-pink", "camel"]
+    }
+  },
+  "carpet_textures": {
+    "silk_weave": {
+      "prompt_template": "seamless tileable silk weave texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["fine-weave", "lustrous-lines", "smooth-grid", "dense-pattern"],
+      "colors": ["ivory", "champagne", "pearl-gray", "rose-gold", "cream", "platinum"]
+    },
+    "wool_weave": {
+      "prompt_template": "seamless tileable wool weave texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["matte-weave", "thick-lines", "coarse-grid", "rustic-pattern"],
+      "colors": ["burgundy", "navy-blue", "forest-green", "charcoal-gray", "terracotta", "sage-green"]
+    },
+    "berber_texture": {
+      "prompt_template": "seamless tileable berber texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["loop-dots", "multi-level", "flecked-speckles", "geometric-loops"],
+      "colors": ["oatmeal", "taupe", "charcoal", "sage", "cream", "mocha"]
+    },
+    "sisal_texture": {
+      "prompt_template": "seamless tileable sisal weave texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["basket-weave", "herringbone-lines", "diamond-grid", "crosshatch"],
+      "colors": ["natural-tan", "bleached", "dark-brown", "gray-wash", "sage", "charcoal"]
+    }
+  },
+  "technical_textures": {
+    "microfiber_texture": {
+      "prompt_template": "seamless tileable microfiber texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["ultra-fine-grid", "smooth-surface", "suede-dots", "brushed-lines"],
+      "colors": ["white", "gray", "navy", "black", "royal-blue", "burgundy"]
+    },
+    "mesh_texture": {
+      "prompt_template": "seamless tileable mesh texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["fine-grid", "athletic-holes", "power-mesh", "hexagon-pattern"],
+      "colors": ["white", "black", "navy", "red", "neon-green", "gray"]
+    }
+  },
+  "luxury_textures": {
+    "cashmere_texture": {
+      "prompt_template": "seamless tileable cashmere texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["brushed-lines", "fine-weave", "soft-grid", "double-face"],
+      "colors": ["cream", "camel", "charcoal", "navy", "burgundy", "sage"]
+    },
+    "mohair_texture": {
+      "prompt_template": "seamless tileable mohair texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["fuzzy-lines", "loop-pattern", "cut-texture", "brushed-surface"],
+      "colors": ["ivory", "cream", "dusty-rose", "sage", "charcoal", "navy"]
+    }
+  },
+  "outdoor_textures": {
+    "canvas_texture": {
+      "prompt_template": "seamless tileable canvas texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["plain-weave", "duck-texture", "heavy-grid", "ripstop-pattern"],
+      "colors": ["navy", "forest-green", "burgundy", "khaki", "black", "white"]
+    }
+  },
+  "home_textures": {
+    "terry_texture": {
+      "prompt_template": "seamless tileable terry cloth texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["loop-dots", "waffle-grid", "bamboo-lines", "turkish-pattern"],
+      "colors": ["white", "cream", "sage", "navy", "charcoal", "dusty-blue"]
+    },
+    "flannel_texture": {
+      "prompt_template": "seamless tileable flannel texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["brushed-surface", "soft-lines", "plaid-base", "vintage-wash"],
+      "colors": ["cream", "sage", "dusty-blue", "burgundy", "charcoal", "white"]
+    }
+  },
+  "industrial_textures": {
+    "canvas_heavy": {
+      "prompt_template": "seamless tileable heavy canvas texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["duck-weave", "twill-diagonal", "plain-grid", "industrial-lines"],
+      "colors": ["natural", "khaki", "navy", "black", "olive", "brown"]
+    },
+    "cordura_texture": {
+      "prompt_template": "seamless tileable cordura texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["ripstop-grid", "ballistic-weave", "textured-surface", "tactical-pattern"],
+      "colors": ["black", "coyote-brown", "olive-drab", "navy", "gray", "multicam"]
+    }
+  },
+  "natural_textures": {
+    "hemp_texture": {
+      "prompt_template": "seamless tileable hemp texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["natural-weave", "eco-lines", "organic-grid", "sustainable-pattern"],
+      "colors": ["natural", "cream", "sage", "charcoal", "brown", "gray"]
+    },
+    "bamboo_texture": {
+      "prompt_template": "seamless tileable bamboo texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["bamboo-lines", "eco-weave", "natural-grid", "sustainable-surface"],
+      "colors": ["natural", "cream", "sage", "dusty-blue", "charcoal", "white"]
+    }
+  },
+  "decorative_textures": {
+    "brocade_texture": {
+      "prompt_template": "seamless tileable brocade texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["ornate-pattern", "metallic-lines", "jacquard-design", "traditional-motif"],
+      "colors": ["gold-burgundy", "silver-navy", "bronze-green", "copper-cream", "jewel-tones", "rich-colors"]
+    },
+    "damask_texture": {
+      "prompt_template": "seamless tileable damask texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["classic-damask", "modern-lines", "elegant-pattern", "formal-design"],
+      "colors": ["cream-gold", "white-silver", "burgundy-gold", "navy-cream", "sage-cream", "charcoal-silver"]
+    }
+  },
+  "stone_textures": {
+    "marble": {
+      "prompt_template": "seamless tileable marble texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["soft-veining", "dramatic-streaks", "cracked-pattern", "linear-bands"],
+      "colors": ["carrara-white", "black-marquina", "calacatta-gold", "verde-guatemala", "emperor-brown", "rosa-levanto"]
+    },
+    "granite": {
+      "prompt_template": "seamless tileable granite texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["fine-speckles", "coarse-grain", "wavy-flow", "uniform-dots"],
+      "colors": ["black-galaxy", "absolute-black", "baltic-brown", "blue-pearl", "ivory-white", "rosa-beta"]
+    },
+    "terrazzo": {
+      "prompt_template": "seamless tileable terrazzo texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["large-aggregate", "small-chips", "dense-pattern", "sparse-flecks"],
+      "colors": ["white-multi", "black-white", "pastel-flecks", "earth-tones", "jewel-tones", "monochrome-chips"]
+    },
+    "cracked_mud": {
+      "prompt_template": "seamless tileable cracked mud texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["large-polygons", "fine-fissures", "deep-gaps", "hexagonal-cracks"],
+      "colors": ["dried-earth", "gray-clay", "terracotta", "dark-soil", "salt-flats-white", "riverbed-silt"]
+    },
+    "sandstone": {
+      "prompt_template": "seamless tileable sandstone texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["layered-bands", "fine-grain", "rough-surface", "wavy-lines"],
+      "colors": ["beige", "red-rock", "tan", "gray-bands", "yellow-ochre", "white"]
+    }
+  },
+  "wood_textures": {
+    "birch_bark": {
+      "prompt_template": "seamless tileable birch bark texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["horizontal-lines", "peeling-curls", "knot-patterns", "smooth-surface"],
+      "colors": ["white-black", "gray-white", "cream-brown", "pale-silver", "golden-yellow", "peeling-tan"]
+    },
+    "pine_bark": {
+      "prompt_template": "seamless tileable pine bark texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["ridged-plates", "deep-furrows", "flaky-scales", "puzzle-pieces"],
+      "colors": ["reddish-brown", "dark-gray", "charcoal", "gray-green-lichen", "amber-resin", "blackened"]
+    },
+    "plywood": {
+      "prompt_template": "seamless tileable plywood texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["layered-grain", "end-grain-lines", "rotary-peel", "sanded-surface"],
+      "colors": ["natural-pine", "light-birch", "dark-stain", "reddish-oak", "gray-wash", "black"]
+    },
+    "woven_bamboo": {
+      "prompt_template": "seamless tileable woven bamboo texture pattern, {style}, {color}, flat design, vector art style, graphic design, clean lines, sharp edges, solid colors, high contrast, decorative motif, no shadows, no 3D effects, flat illustration",
+      "styles": ["basket-weave", "diagonal-plait", "flat-strips", "herringbone"],
+      "colors": ["natural-tan", "dark-brown", "greenish-hue", "bleached-white", "carbonized-black", "golden-yellow"]
+    }
+  }
+}
