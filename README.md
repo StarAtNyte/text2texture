@@ -220,47 +220,6 @@ python generate_many_textures.py --steps 50 --guidance_scales 7.0,8.0
 python superresolve.py input/ output/ --batch_size 2 --tile_size 480 --delay_between_batches 3.0
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-**CUDA Out of Memory (OOM)**
-```bash
-# Reduce batch size
---batch_size 1
-
-# Enable patch-wise processing
---patch_wise
-
-# Reduce image dimensions (if needed)
-WIDTH, HEIGHT = 768, 768
-```
-
-**Model Download Failures**
-```bash
-# Check HuggingFace token
-echo $HUGGINGFACE_TOKEN
-
-# Manually download models
-huggingface-cli download stabilityai/stable-diffusion-3.5-medium
-```
-
-**Slow Generation**
-```bash
-# Use SDXL instead of SD3.5
-python generate_textures_sdxl.py
-
-# Reduce guidance scale count
-CFG_VALUES = [7.0]  # Single value instead of multiple
-```
-
-### Performance Tips
-
-1. **Use SDXL with LoRA** for better texture quality
-2. **Enable patch-wise processing** for lower VRAM usage
-3. **Adjust batch sizes** based on your GPU memory
-4. **Monitor system resources** during generation
-
 ## Model Information
 
 ### Stable Diffusion Models
@@ -271,29 +230,3 @@ CFG_VALUES = [7.0]  # Single value instead of multiple
 ### Super-Resolution
 - **SwinIR-L**: 4x upscaling optimized for real-world images
 - **Model**: `003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth`
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Add your materials to the texture categories
-4. Test with small batches first
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License. See LICENSE file for details.
-
-## Acknowledgments
-
-- Stability AI for Stable Diffusion models
-- SwinIR team for super-resolution model
-- Hugging Face for model hosting and diffusers library
-- dog-god for texture synthesis LoRA
-
-## Support
-
-For issues and questions:
-1. Check the troubleshooting section
-2. Review CLAUDE.md for development guidance
-3. Open an issue on GitHub
