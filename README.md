@@ -1,7 +1,6 @@
 # Text2Texture - Professional Seamless Texture Generation
 
-
-## A Python-based texture generation system that creates high-quality, seamless textures using AI models. The system combines Stable Diffusion (SDXL) for texture generation with SwinIR for 4x super-resolution upscaling.
+A Python-based texture generation system that creates high-quality, seamless textures using SDXL.
 
 **🔄 What makes it "seamless"?** Every texture generated uses advanced circular padding and noise rolling techniques to ensure perfect edge continuity when tiled infinitely.
 
