@@ -16,8 +16,9 @@ import random
 from typing import List, Dict
 import time
 import re
-from flask import Flask, render_template_string, request, jsonify, send_file
-from werkzeug.utils import secure_filename
+from fastapi import FastAPI, Request, Form, File, HTTPException
+from fastapi.responses import HTMLResponse, Response, FileResponse
+from fastapi.templating import Jinja2Templates
 import tempfile
 
 # Modal setup - exactly matching the original
@@ -25,8 +26,8 @@ image = (
     modal.Image.debian_slim(python_version="3.11")
     .pip_install([
         "torch>=2.1.0", "torchvision>=0.16.0", "diffusers>=0.30.0", "transformers",
-        "accelerate", "peft", "safetensors", "Pillow", "flask",
-        "numpy<2.0", "tqdm", "sentencepiece", "werkzeug"
+        "accelerate", "peft", "safetensors", "Pillow", "fastapi", "python-multipart",
+        "numpy<2.0", "tqdm", "sentencepiece"
     ])
     .apt_install(["libgl1-mesa-glx", "libglib2.0-0", "git"])
     .add_local_dir(".", "/app")
@@ -294,7 +295,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Text2Texture Generator</title>
+    <title>Text2Texture</title>
     <style>
         * {
             margin: 0;
@@ -314,7 +315,6 @@ HTML_TEMPLATE = """
             backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            position: sticky;
             top: 0;
             z-index: 100;
         }
@@ -630,7 +630,7 @@ HTML_TEMPLATE = """
 </head>
 <body>
     <nav class="navbar">
-        <h1>🎨 Professional Text2Texture Generator</h1>
+        <h1>Text2Texture</h1>
     </nav>
     
     <div class="container">
@@ -725,7 +725,7 @@ HTML_TEMPLATE = """
                 </div>
                 
                 <button type="submit" class="generate-btn">
-                    🚀 Generate Professional Texture
+                    🚀 Generate Texture
                 </button>
             </form>
         </div>
@@ -844,17 +844,30 @@ HTML_TEMPLATE = """
 </html>
 """
 
-# Flask app with full SDXL integration
-flask_app = Flask(__name__)
+# FastAPI app with full SDXL integration
+web_app = FastAPI()
 texture_generator = None
 stored_images = {}
 
-@flask_app.route('/')
-def home():
-    return render_template_string(HTML_TEMPLATE)
+@web_app.get("/", response_class=HTMLResponse)
+async def home():
+    return HTML_TEMPLATE
 
-@flask_app.route('/generate', methods=['POST'])
-def generate_texture():
+@web_app.post("/generate")
+async def generate_texture(
+    request: Request,
+    prompt: str = Form(...),
+    width: int = Form(1024),
+    height: int = Form(1024),
+    guidance_scale: float = Form(7.5),
+    steps: int = Form(50),
+    seamless: str = Form(""),
+    use_refiner: str = Form(""),
+    high_noise_frac: float = Form(0.8),
+    oversample: float = Form(1.0),
+    tile_size: int = Form(2),
+    seed: str = Form("")
+):
     global texture_generator, stored_images
     
     try:
@@ -863,28 +876,16 @@ def generate_texture():
             texture_generator = SDXLTextureGenerator()
         
         # Get form data
-        prompt = request.form.get('prompt', '').strip()
-        if not prompt:
-            return jsonify({'success': False, 'error': 'Prompt is required'})
+        if not prompt.strip():
+            return {'success': False, 'error': 'Prompt is required'}
         
-        width = int(request.form.get('width', 1024))
-        height = int(request.form.get('height', 1024))
-        guidance_scale = float(request.form.get('guidance_scale', 7.5))
-        steps = int(request.form.get('steps', 50))
-        seamless = request.form.get('seamless') == 'on'
-        use_refiner = request.form.get('use_refiner') == 'on'
-        high_noise_frac = float(request.form.get('high_noise_frac', 0.8))
-        oversample = float(request.form.get('oversample', 1.0))
-        tile_size = int(request.form.get('tile_size', 2))
-        
-        seed = request.form.get('seed')
-        if seed:
-            seed = int(seed)
-        else:
-            seed = None
+        # Process form parameters (FastAPI handles type conversion)
+        seamless_bool = seamless == 'on'
+        use_refiner_bool = use_refiner == 'on'
+        seed_int = int(seed) if seed and seed.isdigit() else None
         
         # Enhance prompt using the exact same function
-        enhanced_prompt = enhance_prompt_for_details(prompt, seamless=seamless)
+        enhanced_prompt = enhance_prompt_for_details(prompt, seamless=seamless_bool)
         
         # Use the EXACT same negative prompt as the original
         negative_prompt = ("blurry, soft focus, blur, soft, fuzzy, out of focus, unsharp, "
@@ -919,9 +920,9 @@ def generate_texture():
             height=height,
             guidance_scale=guidance_scale,
             num_inference_steps=steps,
-            seed=seed,
-            enable_seamless=seamless,
-            use_refiner=use_refiner,
+            seed=seed_int,
+            enable_seamless=seamless_bool,
+            use_refiner=use_refiner_bool,
             high_noise_frac=high_noise_frac,
             oversample_factor=oversample
         )
@@ -947,47 +948,45 @@ def generate_texture():
         tiled_image.save(tiled_byte_arr, format='PNG')
         stored_images[tiled_id] = tiled_byte_arr.getvalue()
         
-        return jsonify({
+        return {
             'success': True,
             'image_id': image_id,
             'tiled_id': tiled_id,
             'seed': actual_seed,
             'width': width,
             'height': height,
-            'seamless': seamless,
-            'use_refiner': use_refiner,
+            'seamless': seamless_bool,
+            'use_refiner': use_refiner_bool,
             'steps': steps,
             'guidance_scale': guidance_scale,
             'tile_size': f"{tile_size}x{tile_size}"
-        })
+        }
         
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)})
+        return {'success': False, 'error': str(e)}
 
-@flask_app.route('/image/<image_id>')
-def get_image(image_id):
+@web_app.get("/image/{image_id}")
+async def get_image(image_id: str):
     if image_id not in stored_images:
-        return "Image not found", 404
+        raise HTTPException(status_code=404, detail="Image not found")
     
-    return send_file(
-        io.BytesIO(stored_images[image_id]),
-        mimetype='image/png',
-        as_attachment=False
+    return Response(
+        content=stored_images[image_id],
+        media_type="image/png"
     )
 
-@flask_app.route('/download/<image_id>')
-def download_image(image_id):
+@web_app.get("/download/{image_id}")
+async def download_image(image_id: str):
     if image_id not in stored_images:
-        return "Image not found", 404
+        raise HTTPException(status_code=404, detail="Image not found")
     
-    return send_file(
-        io.BytesIO(stored_images[image_id]),
-        mimetype='image/png',
-        as_attachment=True,
-        download_name=f"{image_id}.png"
+    return Response(
+        content=stored_images[image_id],
+        media_type="image/png",
+        headers={"Content-Disposition": f"attachment; filename={image_id}.png"}
     )
 
-# Modal web endpoints - properly configured
+# Modal ASGI app configuration
 @app_modal.function(
     image=image,
     gpu="A100-40GB",
@@ -995,21 +994,12 @@ def download_image(image_id):
     timeout=7200,  # 2 hours for complex generations
     secrets=[modal.Secret.from_name("huggingface-secret")]
 )
-@modal.web_endpoint(method="GET", label="texture-webapp-full")
-def web_app_get():
-    return flask_app
+@modal.asgi_app()
+def web():
+    return web_app
 
-@app_modal.function(
-    image=image,
-    gpu="A100-40GB", 
-    volumes={"/models": model_volume},
-    timeout=7200,
-    secrets=[modal.Secret.from_name("huggingface-secret")]
-)
-@modal.web_endpoint(method="POST", label="texture-webapp-full")  
-def web_app_post():
-    return flask_app
 
 if __name__ == "__main__":
     # For local testing
-    flask_app.run(debug=True, host="0.0.0.0", port=5000)
+    import uvicorn
+    uvicorn.run(web_app, host="0.0.0.0", port=5000)
