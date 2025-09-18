@@ -4,6 +4,22 @@ A Python-based texture generation system that creates high-quality, seamless tex
 
 **🔄 What makes it "seamless"?** Every texture generated uses advanced circular padding and noise rolling techniques to ensure perfect edge continuity when tiled infinitely.
 
+### Example: Ornate Persian Carpet Pattern
+
+<div align="center">
+
+| Original Pattern | Tiled 4x4 Preview |
+|:----------------:|:-----------------:|
+| <img width="1024" height="1024" alt="image_part_001 (1)" src="https://github.com/user-attachments/assets/0fd45835-9e57-4586-b5a7-138e3e9b16ad" /> | ➡️ <img width="2048" height="2048" alt="tiled_2x2_tiled (1)" src="https://github.com/user-attachments/assets/da71c8df-008c-4f56-bb8f-c5275463436e" /> |
+
+
+*Notice how the texture tiles perfectly with no visible seams at the edges*
+
+</div>
+
+The arrows (➡️) show the transformation from single texture to seamlessly tiled preview, demonstrating perfect edge continuity.
+
+
 ## 🌟 Features
 
 ### Core Technologies
