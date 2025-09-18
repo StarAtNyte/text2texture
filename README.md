@@ -8,7 +8,7 @@ A Python-based texture generation system that creates high-quality, seamless tex
 
 <div align="center">
 
-| Original Pattern | Tiled 2x3 Preview |
+| Original Pattern | Tiled 2x2 Preview |
 |:----------------:|:-----------------:|
 | <img width="1024" height="1024" alt="image_part_001 (1)" src="https://github.com/user-attachments/assets/0fd45835-9e57-4586-b5a7-138e3e9b16ad" /> | ➡️ <img width="2048" height="2048" alt="tiled_2x2_tiled (1)" src="https://github.com/user-attachments/assets/da71c8df-008c-4f56-bb8f-c5275463436e" /> |
 
